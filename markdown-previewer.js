@@ -174,8 +174,8 @@ class Footer extends React.Component {
             <footer>
                 <div id="portfolio">
                     <a href="https://www.linkedin.com/in/filipy-dellagnolo-477860215/" target="_blank" title="My Linkedin Page"><i class="fa fa-linkedin-square fa-2x"/></a>
-                    <a href="https://www.linkedin.com/in/filipy-dellagnolo-477860215/" target="_blank" title="README"><i class="fa fa-file-text fa-2x"/></a>
-                    <a href="https://www.linkedin.com/in/filipy-dellagnolo-477860215/" target="_blank" title="My Github Page"><i class="fa fa-github-square fa-2x"/></a>
+                    <a href="https://github.com/filipy94/markdown-previewer" target="_blank" title="README"><i class="fa fa-file-text fa-2x"/></a>
+                    <a href="https://github.com/filipy94" target="_blank" title="My Github Page"><i class="fa fa-github-square fa-2x"/></a>
                 </div>
             </footer>
         );
