@@ -32,6 +32,9 @@ And here. | Okay. | I think we get it.
 * And last but not least, let's not forget embedded images:
 ![React Logo w/ Text](https://goo.gl/Umyytc)`
 
+marked.setOptions({
+    breaks: true,
+  }); 
 const renderer = new marked.Renderer();
 renderer.link = function (href, title, text) {
   return `<a target="_blank" href="${href}">${text}</a>`;
@@ -39,6 +42,8 @@ renderer.link = function (href, title, text) {
 
 const maximizeIcon = "fa fa-arrows-alt fa-2x";
 const minimizeIcon = "fa fa-compress fa-2x";
+const maximizeStyle = {width: "80vw"};
+const minimizeStyle = {};
 
 class App extends React.Component {
     constructor(props) {
@@ -83,17 +88,20 @@ class App extends React.Component {
     render() {
         return (
             <div id="main">
-                {!this.state.previewMaximize && <Editor 
-                    userInput={this.state.userInput}
-                    icon={this.state.editorMaximize} 
-                    handleChange={this.handleChange}
-                    refreshText={this.refreshText}
-                    clear={this.clear}
-                    editorMaximize={this.editorMaximize}/>}
-                {!this.state.editorMaximize && <Preview 
-                    userInput={this.state.userInput}
-                    icon={this.state.previewMaximize}
-                    previewMaximize={this.previewMaximize} />}
+                <div id="boxes">
+                    {!this.state.previewMaximize && <Editor 
+                        userInput={this.state.userInput}
+                        minimizeMaximize={this.state.editorMaximize} 
+                        handleChange={this.handleChange}
+                        refreshText={this.refreshText}
+                        clear={this.clear}
+                        editorMaximize={this.editorMaximize}/>}
+                    {!this.state.editorMaximize && <Preview 
+                        userInput={this.state.userInput}
+                        minimizeMaximize={this.state.previewMaximize}
+                        previewMaximize={this.previewMaximize} />}
+                </div>
+                <Footer />
             </div>
         );
     };
@@ -106,7 +114,7 @@ class Editor extends React.Component {
     render() {
         return (
             <div class="container">
-                <div class="header">
+                <div class="header" style={this.props.minimizeMaximize ? maximizeStyle : minimizeStyle}>
                     <h2><i class="fa fa-file-text"/>-Editor</h2>
                     <div class="btn" id="editor-btn">
                         <i 
@@ -120,11 +128,12 @@ class Editor extends React.Component {
                         <i 
                             title="Expand/Compress Editor Area"
                             onClick={this.props.editorMaximize} 
-                            class={this.props.icon ? minimizeIcon : maximizeIcon}/>
+                            class={this.props.minimizeMaximize ? minimizeIcon : maximizeIcon}/>
                     </div>
                 </div>
                 <textarea 
-                    id="editor" 
+                    id="editor"
+                    style={this.props.minimizeMaximize ? maximizeStyle : minimizeStyle}
                     onChange={this.props.handleChange}
                     value={this.props.userInput}/>
             </div>
@@ -139,21 +148,36 @@ class Preview extends React.Component {
     render() {
         return (
             <div class="container">
-                <div class="header">
+                <div class="header" style={this.props.minimizeMaximize ? maximizeStyle : minimizeStyle}>
                     <h2><i class="fa fa-desktop"/>-Preview</h2>
                     <div class="btn">                        
                         <i 
                             title="Expand/Compress Preview Area"
                             onClick={this.props.previewMaximize} 
-                            class={this.props.icon ? minimizeIcon : maximizeIcon}/>
+                            class={this.props.minimizeMaximize ? minimizeIcon : maximizeIcon}/>
                     </div>
                 </div>
                 <div
                     dangerouslySetInnerHTML={{
                     __html: marked(this.props.userInput, { renderer: renderer })
                     }}
-                    id="preview" />
+                    id="preview"
+                    style={this.props.minimizeMaximize ? maximizeStyle : minimizeStyle} />
             </div>          
+        );
+    };
+};
+
+class Footer extends React.Component {
+    render() {
+        return (
+            <footer>
+                <div id="portfolio">
+                    <a href="https://www.linkedin.com/in/filipy-dellagnolo-477860215/" target="_blank" title="My Linkedin Page"><i class="fa fa-linkedin-square fa-2x"/></a>
+                    <a href="https://www.linkedin.com/in/filipy-dellagnolo-477860215/" target="_blank" title="README"><i class="fa fa-file-text fa-2x"/></a>
+                    <a href="https://www.linkedin.com/in/filipy-dellagnolo-477860215/" target="_blank" title="My Github Page"><i class="fa fa-github-square fa-2x"/></a>
+                </div>
+            </footer>
         );
     };
 };
